@@ -1,11 +1,13 @@
 package com.genzvirus.theartifact.initializer;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.genzvirus.theartifact.Config;
 import com.genzvirus.theartifact.TheArtifactMod;
 import com.google.common.collect.Lists;
 
@@ -17,7 +19,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -170,6 +174,23 @@ public class Initializer {
 			list.add(key);
 		});
 		return list;
+	}
+	
+	/**
+	 * <b>Created on 8th of October 2021 by GenZVirus.</b><p>
+	 * This method creates the configuration folder and the configuration file of the application.
+	 */
+	
+	public static void setupConfig() {
+		File folder = new File("config/The Artifact/");
+		if (!folder.exists()) {
+			try {
+				folder.mkdir();
+			} catch (Exception e) {
+				LOGGER.debug("Failed to create config directory");
+			}
+		}
+		ModLoadingContext.get().registerConfig(Type.COMMON, Config.COMMON_SPEC, "The Artifact/Configs.toml");
 	}
 
 }

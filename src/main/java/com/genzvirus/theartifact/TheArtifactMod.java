@@ -8,10 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.genzvirus.theartifact.initializer.Initializer;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -22,7 +19,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * <b>Created on 4th of October 2021 by GenZVirus.</b><p>
@@ -37,6 +33,8 @@ public class TheArtifactMod {
 
 	public TheArtifactMod() {
 
+		Initializer.setupConfig();
+		
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		// Register the setup method for modloading
