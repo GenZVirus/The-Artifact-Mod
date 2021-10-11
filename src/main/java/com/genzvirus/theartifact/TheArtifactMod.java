@@ -6,8 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.genzvirus.theartifact.initializer.Initializer;
+import com.genzvirus.theartifact.tools.commands.MemoPosition;
+import com.genzvirus.theartifact.tools.commands.RegisterCommands;
+import com.mojang.brigadier.CommandDispatcher;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.command.CommandSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -82,5 +86,6 @@ public class TheArtifactMod {
 	public void onServerStarting(FMLServerStartingEvent event) {
 		// do something when the server starts
 		LOGGER.info("HELLO from server starting");
+		RegisterCommands.registerCommands(event.getServer().getCommands().getDispatcher());
 	}
 }
