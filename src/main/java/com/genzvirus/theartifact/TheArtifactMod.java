@@ -6,12 +6,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.genzvirus.theartifact.initializer.Initializer;
-import com.genzvirus.theartifact.tools.commands.MemoPosition;
+import com.genzvirus.theartifact.tools.BlockList;
+import com.genzvirus.theartifact.tools.FileManager;
 import com.genzvirus.theartifact.tools.commands.RegisterCommands;
-import com.mojang.brigadier.CommandDispatcher;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.command.CommandSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -53,6 +52,9 @@ public class TheArtifactMod {
 		Initializer.InitializeBlocks(bus);
 		Initializer.InitializeItems(bus);
 		
+		BlockList.init();
+		FileManager.setupDirectory();
+		
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
 	}
@@ -63,6 +65,7 @@ public class TheArtifactMod {
 		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 	}
 
+	@SuppressWarnings("resource")
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		// do something that can only be done on the client
 		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);

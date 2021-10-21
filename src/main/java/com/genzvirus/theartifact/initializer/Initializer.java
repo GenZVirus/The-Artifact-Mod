@@ -47,7 +47,7 @@ public class Initializer {
 	 */
 	
 	public static void InitializeBlocks(IEventBus eventBusIn) {
-		addBlockEntry("example_block", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.METAL).harvestLevel(3)));
+		addBlockEntry("wall", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3)));
 		
 		BLOCKS.register(eventBusIn);
 	}

@@ -1,4 +1,4 @@
-378959b853be7462f98dd6d6f01745f527943ed3 assets/theartifact/blockstates/example_block.json
-346d4de71a1f7f3c84f5f097dd3e619c6904c81e assets/theartifact/models/block/example_block.json
-d4db05e0b097f9661cdafb3483d1b93106a21246 assets/theartifact/models/item/example_block.json
+622e7fa203026471ba19442377b130da931dd67f assets/theartifact/blockstates/wall.json
+5ac953dce2976dd83515832a1f27e0f7fb40a918 assets/theartifact/models/block/wall.json
 9750b330654e9aafb871fa39ed07a9d13abc621a assets/theartifact/models/item/example_item.json
+28a570f09502ec9a08a968e3aea9894f66ee8cd8 assets/theartifact/models/item/wall.json
