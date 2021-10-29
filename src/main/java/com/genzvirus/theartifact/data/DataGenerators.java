@@ -8,6 +8,7 @@ import com.genzvirus.theartifact.initializer.Initializer;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +18,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * <b>Created on 6th of October 2021 by GenZVirus.</b><p>
+ * <b>Last update on 27th of October 2021 by GenZVirus.</b><p>
  * Automate model generation for all objects created in this software.
  * @author GenZVirus.
  */
@@ -41,6 +43,7 @@ public class DataGenerators {
 
 	/**
 	 * <b>Created on 6th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 27th of October 2021 by GenZVirus.</b><p>
 	 * Create item variant for each block in the registry.
 	 * @author GenZVirus.gith
 	 */
@@ -49,7 +52,7 @@ public class DataGenerators {
 		final IForgeRegistry<Item> registry = blockRegistryEvent.getRegistry();
 
 		Initializer.getBlockRegistryValues().forEach(block -> {
-			final Item.Properties properties = new Item.Properties();
+			final Item.Properties properties = new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS);
 			final BlockItem blockItem = new BlockItem(block, properties);
 			blockItem.setRegistryName(block.getRegistryName());
 			registry.register(blockItem);

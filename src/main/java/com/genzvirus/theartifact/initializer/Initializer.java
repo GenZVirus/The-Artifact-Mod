@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.genzvirus.theartifact.Config;
 import com.genzvirus.theartifact.TheArtifactMod;
+import com.genzvirus.theartifact.items.WandOfEmpowerment;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
@@ -27,6 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * <b>Created on 4th of October 2021 by GenZVirus.</b><p>
+ * <b>Last update on 29th of October 2021 by GenZVirus.</b><p>
  * This Initializer is used to create and register objects the player can interact with such as blocks, items and entities.
  * @author - GenZVirus.
  * @since - Version: 1.0.
@@ -37,29 +39,37 @@ public class Initializer {
 	private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TheArtifactMod.MOD_ID);
 	private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TheArtifactMod.MOD_ID);
 	private static final HashMap<String, RegistryObject<Block>> BLOCK_REGISTRY = new HashMap<String, RegistryObject<Block>>();
-	private static final HashMap<String, RegistryObject<Item>> ITEM_REGISTRY = new HashMap<String, RegistryObject<Item>>();
+	private static final HashMap<String, RegistryObject<Item>> SIMPLE_ITEM_REGISTRY = new HashMap<String, RegistryObject<Item>>();
+	private static final HashMap<String, RegistryObject<Item>> HANDHELD_ITEM_REGISTRY = new HashMap<String, RegistryObject<Item>>();
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	/** 
 	 * <b>Created on 4th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 27th of October 2021 by GenZVirus.</b><p>
 	 * Creates and registers all blocks inside the method.
 	 * @param eventBusIn - This event bus is used to call the register method.
 	 */
 	
 	public static void InitializeBlocks(IEventBus eventBusIn) {
-		addBlockEntry("wall", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3)));
+		addBlockEntry("empowered_stone", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 1;})));
+		addBlockEntry("empowered_cracked_stone", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addBlockEntry("empowered_carved_stone", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addBlockEntry("empowered_chiseled_stone_bricks", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addBlockEntry("empowered_stone_bricks", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 1;})));
+		addBlockEntry("empowered_cracked_stone_bricks", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
 		
 		BLOCKS.register(eventBusIn);
 	}
 	
 	/** 
 	 * <b>Created on 7th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 29th of October 2021 by GenZVirus.</b><p>
 	 * Creates and registers all items inside the method.
 	 * @param eventBusIn - This event bus is used to call the register method.
 	 */
 	
 	public static void InitializeItems(IEventBus eventBusIn) {
-		addItemEntry("example_item", new Item(new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+		addHandheldItemEntry("wand_of_empowerment", new WandOfEmpowerment(new Item.Properties().durability(100).tab(ItemGroup.TAB_TOOLS)));
 		
 		ITEMS.register(eventBusIn);
 	}
@@ -78,14 +88,27 @@ public class Initializer {
 	
 	/** 
 	 * <b>Created on 7th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 29th of October 2021 by GenZVirus.</b><p>
 	 * Add a new item entry to the hash map.
 	 * @param nameIn - HashMap key.
 	 * @param itemIn - HashMap value.
 	 */
 	
-	private static void addItemEntry(String nameIn, Item itemIn) {
+	private static void addSimpleItemEntry(String nameIn, Item itemIn) {
 		RegistryObject<Item> item = ITEMS.register(nameIn, () -> itemIn);
-		ITEM_REGISTRY.put(nameIn, item);
+		SIMPLE_ITEM_REGISTRY.put(nameIn, item);
+	}
+	
+	/** 
+	 * <b>Created on 29th of October 2021 by GenZVirus.</b><p>
+	 * Add a new item entry to the hash map.
+	 * @param nameIn - HashMap key.
+	 * @param itemIn - HashMap value.
+	 */
+	
+	private static void addHandheldItemEntry(String nameIn, Item itemIn) {
+		RegistryObject<Item> item = ITEMS.register(nameIn, () -> itemIn);
+		HANDHELD_ITEM_REGISTRY.put(nameIn, item);
 	}
 	
 	/** 
@@ -106,13 +129,15 @@ public class Initializer {
 	
 	/** 
 	 * <b>Created on 7th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 29th of October 2021 by GenZVirus.</b><p>
 	 * Retrieve the item by name. The method checks if the name is valid, if it is not it returns an Air item.
 	 * @param nameIn - The key used to search and retrieve the registry.
 	 * @return - returns the item if the key is valid, otherwise it returns an Air item.
 	 */
 	public static Item getItem(String nameIn) {
 		Item item = Items.AIR;
-		RegistryObject<Item> registry = ITEM_REGISTRY.get(nameIn);
+		RegistryObject<Item> registry = SIMPLE_ITEM_REGISTRY.get(nameIn);
+		if(registry == null) registry = HANDHELD_ITEM_REGISTRY.get(nameIn);
 		if (registry != null)
 			item = registry.get();
 		else
@@ -136,13 +161,28 @@ public class Initializer {
 	
 	/**
 	 * <b>Created on 7th of October 2021 by GenZVirus.</b><p>
-	 * Create and retrieve a list of all available item values.
+	 * <b>Last update on 29th of October 2021 by GenZVirus.</b><p>
+	 * Create and retrieve a list of all available simple item values.
 	 * @return - a list of items.
 	 */
 	
-	public static List<Item> getItemRegistryValues(){
+	public static List<Item> getSimpleItemRegistryValues(){
 		List<Item> list = Lists.newArrayList();
-		ITEM_REGISTRY.forEach((key, value)->{
+		SIMPLE_ITEM_REGISTRY.forEach((key, value)->{
+			list.add(value.get());
+		});
+		return list;
+	}
+	
+	/**
+	 * <b>Created on 29th of October 2021 by GenZVirus.</b><p>
+	 * Create and retrieve a list of all available hand held item values.
+	 * @return - a list of items.
+	 */
+	
+	public static List<Item> getHandheldItemRegistryValues(){
+		List<Item> list = Lists.newArrayList();
+		HANDHELD_ITEM_REGISTRY.forEach((key, value)->{
 			list.add(value.get());
 		});
 		return list;
@@ -164,13 +204,28 @@ public class Initializer {
 	
 	/**
 	 * <b>Created on 7th of October 2021 by GenZVirus.</b><p>
-	 * Create and retrieve a list of all available item keys.
+	 * <b>Last update on 29th of October 2021 by GenZVirus.</b><p>
+	 * Create and retrieve a list of all available simple item keys.
 	 * @return - a list of strings.
 	 */
 	
-	public static List<String> getItemRegistryKeys(){
+	public static List<String> getSimpleItemRegistryKeys(){
 		List<String> list = Lists.newArrayList();
-		ITEM_REGISTRY.forEach((key, value)->{
+		SIMPLE_ITEM_REGISTRY.forEach((key, value)->{
+			list.add(key);
+		});
+		return list;
+	}
+	
+	/**
+	 * <b>Created on 29th of October 2021 by GenZVirus.</b><p>
+	 * Create and retrieve a list of all available simple item keys.
+	 * @return - a list of strings.
+	 */
+	
+	public static List<String> getHandheldItemRegistryKeys(){
+		List<String> list = Lists.newArrayList();
+		HANDHELD_ITEM_REGISTRY.forEach((key, value)->{
 			list.add(key);
 		});
 		return list;

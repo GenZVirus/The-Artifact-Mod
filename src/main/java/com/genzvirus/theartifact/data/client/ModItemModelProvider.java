@@ -36,12 +36,19 @@ public class ModItemModelProvider extends ItemModelProvider {
 		});
 		
 		
-		// ITEMS
+		// SIMPLE ITEMS
 		
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 		
-		Initializer.getItemRegistryKeys().forEach(key->{
+		Initializer.getSimpleItemRegistryKeys().forEach(key->{
 			build(itemGenerated, key);
+		});
+
+		// HANDHELD ITEMS
+		
+		ModelFile itemHandheld = getExistingFile(mcLoc("item/handheld"));
+		Initializer.getHandheldItemRegistryKeys().forEach(key->{
+			build(itemHandheld, key);
 		});
 	}
 	

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "theartifact:item/wand_of_empowerment"
+  }
+}
