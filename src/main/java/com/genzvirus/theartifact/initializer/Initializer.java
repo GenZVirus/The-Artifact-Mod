@@ -9,11 +9,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.genzvirus.theartifact.Config;
 import com.genzvirus.theartifact.TheArtifactMod;
+import com.genzvirus.theartifact.blocks.StairsBlock;
 import com.genzvirus.theartifact.items.WandOfEmpowerment;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -38,7 +40,8 @@ public class Initializer {
 
 	private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TheArtifactMod.MOD_ID);
 	private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TheArtifactMod.MOD_ID);
-	private static final HashMap<String, RegistryObject<Block>> BLOCK_REGISTRY = new HashMap<String, RegistryObject<Block>>();
+	private static final HashMap<String, RegistryObject<Block>> SIMPLE_BLOCK_REGISTRY = new HashMap<String, RegistryObject<Block>>();
+	private static final HashMap<String, RegistryObject<Block>> COMPLEX_BLOCK_REGISTRY = new HashMap<String, RegistryObject<Block>>();
 	private static final HashMap<String, RegistryObject<Item>> SIMPLE_ITEM_REGISTRY = new HashMap<String, RegistryObject<Item>>();
 	private static final HashMap<String, RegistryObject<Item>> HANDHELD_ITEM_REGISTRY = new HashMap<String, RegistryObject<Item>>();
 	private static final Logger LOGGER = LogManager.getLogger();
@@ -51,12 +54,17 @@ public class Initializer {
 	 */
 	
 	public static void InitializeBlocks(IEventBus eventBusIn) {
-		addBlockEntry("empowered_stone", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 1;})));
-		addBlockEntry("empowered_cracked_stone", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
-		addBlockEntry("empowered_carved_stone", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
-		addBlockEntry("empowered_chiseled_stone_bricks", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
-		addBlockEntry("empowered_stone_bricks", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 1;})));
-		addBlockEntry("empowered_cracked_stone_bricks", new Block(Block.Properties.of(Material.METAL).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addSimpleBlockEntry("empowered_stone", new Block(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 1;})));
+		addSimpleBlockEntry("empowered_cracked_stone", new Block(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addSimpleBlockEntry("empowered_carved_stone", new Block(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addSimpleBlockEntry("empowered_chiseled_stone_brick", new Block(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addSimpleBlockEntry("empowered_stone_brick", new Block(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 1;})));
+		addSimpleBlockEntry("empowered_cracked_stone_brick", new Block(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		
+		addComplexBlockEntry("empowered_stone_brick_stairs", new StairsBlock(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addComplexBlockEntry("empowered_stone_stairs", new StairsBlock(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addComplexBlockEntry("empowered_cracked_stone_stairs", new StairsBlock(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));
+		addComplexBlockEntry("empowered_stone_slab", new SlabBlock(Block.Properties.of(Material.STONE).strength(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3).lightLevel((light)->{return 2;})));		
 		
 		BLOCKS.register(eventBusIn);
 	}
@@ -76,15 +84,29 @@ public class Initializer {
 
 	/** 
 	 * <b>Created on 4th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 1st of November 2021 by GenZVirus.</b><p>
 	 * Add a new block entry to the hash map.
 	 * @param nameIn - HashMap key.
 	 * @param blockIn - HashMap value.
 	 */
 	
-	private static void addBlockEntry(String nameIn, Block blockIn) {
+	private static void addSimpleBlockEntry(String nameIn, Block blockIn) {
 		RegistryObject<Block> block = BLOCKS.register(nameIn, () -> blockIn);
-		BLOCK_REGISTRY.put(nameIn, block);
+		SIMPLE_BLOCK_REGISTRY.put(nameIn, block);
 	}
+	
+	/** 
+	 * <b>Created on 1s of November 2021 by GenZVirus.</b><p>
+	 * Add a new block entry to the hash map.
+	 * @param nameIn - HashMap key.
+	 * @param blockIn - HashMap value.
+	 */
+	
+	private static void addComplexBlockEntry(String nameIn, Block blockIn) {
+		RegistryObject<Block> block = BLOCKS.register(nameIn, () -> blockIn);
+		COMPLEX_BLOCK_REGISTRY.put(nameIn, block);
+	}
+	
 	
 	/** 
 	 * <b>Created on 7th of October 2021 by GenZVirus.</b><p>
@@ -113,13 +135,15 @@ public class Initializer {
 	
 	/** 
 	 * <b>Created on 4th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 1st of November 2021 by GenZVirus.</b><p>
 	 * Retrieve the block by name. The method checks if the name is valid, if it is not it returns an Air block.
 	 * @param nameIn - The key used to search and retrieve the registry.
 	 * @return - returns the block if the key is valid, otherwise it returns an Air block.
 	 */
 	public static Block getBlock(String nameIn) {
 		Block block = Blocks.AIR;
-		RegistryObject<Block> registry = BLOCK_REGISTRY.get(nameIn);
+		RegistryObject<Block> registry = SIMPLE_BLOCK_REGISTRY.get(nameIn);
+		if(registry == null) registry = COMPLEX_BLOCK_REGISTRY.get(nameIn);
 		if (registry != null)
 			block = registry.get();
 		else
@@ -147,13 +171,28 @@ public class Initializer {
 	
 	/**
 	 * <b>Created on 6th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 1st of November 2021 by GenZVirus.</b><p>
 	 * Create and retrieve a list of all available block values.
 	 * @return - a list of blocks.
 	 */
 	
-	public static List<Block> getBlockRegistryValues(){
+	public static List<Block> getSimpleBlockRegistryValues(){
 		List<Block> list = Lists.newArrayList();
-		BLOCK_REGISTRY.forEach((key, value)->{
+		SIMPLE_BLOCK_REGISTRY.forEach((key, value)->{
+			list.add(value.get());
+		});
+		return list;
+	}
+	
+	/**
+	 * <b>Created on 1st of November 2021 by GenZVirus.</b><p>
+	 * Create and retrieve a list of all available block values.
+	 * @return - a list of blocks.
+	 */
+	
+	public static List<Block> getComplexBlockRegistryValues(){
+		List<Block> list = Lists.newArrayList();
+		COMPLEX_BLOCK_REGISTRY.forEach((key, value)->{
 			list.add(value.get());
 		});
 		return list;
@@ -190,13 +229,28 @@ public class Initializer {
 	
 	/**
 	 * <b>Created on 6th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 1st of November 2021 by GenZVirus.</b><p>
 	 * Create and retrieve a list of all available block keys.
 	 * @return - a list of strings.
 	 */
 	
-	public static List<String> getBlockRegistryKeys(){
+	public static List<String> getSimpleBlockRegistryKeys(){
 		List<String> list = Lists.newArrayList();
-		BLOCK_REGISTRY.forEach((key, value)->{
+		SIMPLE_BLOCK_REGISTRY.forEach((key, value)->{
+			list.add(key);
+		});
+		return list;
+	}
+	
+	/**
+	 * <b>Created on 1st of November 2021 by GenZVirus.</b><p>
+	 * Create and retrieve a list of all available block keys.
+	 * @return - a list of strings.
+	 */
+	
+	public static List<String> getComplexBlockRegistryKeys(){
+		List<String> list = Lists.newArrayList();
+		COMPLEX_BLOCK_REGISTRY.forEach((key, value)->{
 			list.add(key);
 		});
 		return list;

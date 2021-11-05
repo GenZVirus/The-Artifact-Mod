@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "side": "theartifact:block/empowered_stone_brick",
+    "bottom": "theartifact:block/empowered_stone_brick",
+    "top": "theartifact:block/empowered_stone_brick"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "theartifact:block/empowered_stone_slab_top"
+    },
+    "type=bottom": {
+      "model": "theartifact:block/empowered_stone_slab"
+    },
+    "type=double": {
+      "model": "theartifact:block/empowered_stone_slab"
+    }
+  }
+}

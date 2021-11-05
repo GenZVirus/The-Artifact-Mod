@@ -1,10 +1,11 @@
 {
 	"block.theartifact.empowered_stone": "Empowered Stone",
 	"block.theartifact.empowered_carved_stone": "Empowered Carved Stone",
-	"block.theartifact.empowered_chiseled_stone_bricks": "Empowered Chiseled Stone",
-	"block.theartifact.empowered_stone_bricks": "Empowered Stone Bricks",
+	"block.theartifact.empowered_chiseled_stone_brick": "Empowered Chiseled Stone",
+	"block.theartifact.empowered_stone_brick": "Empowered Stone Bricks",
 	"block.theartifact.empowered_cracked_stone": "Empowered Cracked Stone",
-	"block.theartifact.empowered_cracked_stone_bricks": "Empowered Cracked Stone Bricks",
+	"block.theartifact.empowered_cracked_stone_brick": "Empowered Cracked Stone Bricks",
+	"block.theartifact.empowered_stone_brick_stairs": "Empowered Stone Brick Stairs",
 	
 	"item.theartifact.wand_of_empowerment": "Wand of Empowerment"
 }

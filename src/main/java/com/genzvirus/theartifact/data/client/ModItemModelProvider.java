@@ -31,7 +31,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		
 		// from BLOCKS
 		
-		Initializer.getBlockRegistryKeys().forEach(key->{
+		Initializer.getSimpleBlockRegistryKeys().forEach(key->{
 			withExistingParent(key, modLoc("block/" + key));
 		});
 		

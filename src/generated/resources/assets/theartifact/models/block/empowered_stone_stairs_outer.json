@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "side": "theartifact:block/empowered_stone",
+    "bottom": "theartifact:block/empowered_stone",
+    "top": "theartifact:block/empowered_stone"
+  }
+}

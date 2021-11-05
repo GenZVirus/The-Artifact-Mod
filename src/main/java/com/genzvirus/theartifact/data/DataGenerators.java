@@ -43,7 +43,7 @@ public class DataGenerators {
 
 	/**
 	 * <b>Created on 6th of October 2021 by GenZVirus.</b><p>
-	 * <b>Last update on 27th of October 2021 by GenZVirus.</b><p>
+	 * <b>Last update on 1st of November 2021 by GenZVirus.</b><p>
 	 * Create item variant for each block in the registry.
 	 * @author GenZVirus.gith
 	 */
@@ -51,7 +51,14 @@ public class DataGenerators {
 	public static void onBlocksRegistry(final RegistryEvent.Register<Item> blockRegistryEvent) {
 		final IForgeRegistry<Item> registry = blockRegistryEvent.getRegistry();
 
-		Initializer.getBlockRegistryValues().forEach(block -> {
+		Initializer.getSimpleBlockRegistryValues().forEach(block -> {
+			final Item.Properties properties = new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS);
+			final BlockItem blockItem = new BlockItem(block, properties);
+			blockItem.setRegistryName(block.getRegistryName());
+			registry.register(blockItem);
+		});
+		
+		Initializer.getComplexBlockRegistryValues().forEach(block -> {
 			final Item.Properties properties = new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS);
 			final BlockItem blockItem = new BlockItem(block, properties);
 			blockItem.setRegistryName(block.getRegistryName());
